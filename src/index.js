@@ -1,12 +1,6 @@
-const express = require('express');
-const morgan = require('morgan');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
 
-const app = express();
-
-app.set('port', 8000);
-
-app.use(morgan('dev'));
-app.use(require('./routes/index'));
-app.listen(app.get('port'), () => {
-    console.log('server running on port: ', app.get('port'));
-})
+ReactDOM.render(<App />, document.getElementById('root'));
