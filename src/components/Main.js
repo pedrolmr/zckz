@@ -7,30 +7,36 @@ class Main extends Component{
     constructor(){
         super();
         this.state = {
-            data:{}
+            data:{},
+            counts:{}
         }
     }
 
     componentDidMount(){
         this.getInfo();
-        console.log(this.state.data.data);
     }
-
+    
     getInfo = () => {
         axios
             .get(`${url}=${token}`)
             .then(res => {
-                this.setState({ data: res.data.data});
-                console.log(res.data.data)
+                const {data} = res.data;
+                const { counts } = res.data.data;
+                this.setState({ data: data, counts: counts });
             })
             .catch(err => console.log(err));
 
     }
     render(){
+        if(!this.state.data) return <p>Loading...</p>
         return(
             <div>
-                <p>ID:{this.state.data.id}</p>
+                <img src={this.state.data.profile_picture} alt="profile pic"/>
                 <p>username: {this.state.data.username}</p>
+                <div className="nav">
+                    <p>{this.state.counts.followed_by} followers</p>
+                    <p>{this.state.counts.follows} following</p>
+                </div>
             </div>
         );
     }
